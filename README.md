@@ -16,13 +16,14 @@ Documentation for better-react-spinkit
 ## Install
 
 ```
-npm install better-react-spinkit-docs
+npm install
 ```
 
 ## Usage
 
-```js
-var betterReactSpinkitDocs = require('better-react-spinkit-docs')
+```
+npm start
+npm run build
 ```
 
 ## Contributing
