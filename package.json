@@ -34,7 +34,8 @@
   "scripts": {
     "start": "styleguidist server",
     "build": "npm test && styleguidist build",
-    "test": "standard"
+    "test": "standard",
+    "deploy": "npm run build && aws s3 sync ./dist s3://better-react-spinkit.benjamintatum.com --exclude '.DS_Store' --profile home"
   },
   "babel": {
     "presets": [
