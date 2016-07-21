@@ -1,5 +1,8 @@
 const path = require('path')
-const dir = path.join(__dirname, 'node_modules/better-react-spinkit/src')
+const dirs = [
+  path.join(__dirname, 'node_modules/better-react-spinkit/src'),
+  path.join(__dirname, 'src')
+]
 
 module.exports = {
   title: 'better-react-spinkit',
@@ -7,9 +10,10 @@ module.exports = {
   skipComponentsWithoutExample: true,
   styleguideDir: 'dist',
   updateWebpackConfig: (webpackConfig, env) => {
+    webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.join(__dirname, 'src/Layout')
     webpackConfig.module.loaders.push({
       test: /\.js?$/,
-      include: dir,
+      include: dirs,
       loader: 'babel'
     })
     return webpackConfig
