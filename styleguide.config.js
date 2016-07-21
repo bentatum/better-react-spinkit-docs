@@ -1,21 +1,37 @@
 const path = require('path')
-const dirs = [
-  path.join(__dirname, 'node_modules/better-react-spinkit/src'),
-  path.join(__dirname, 'src')
-]
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   title: 'better-react-spinkit',
-  components: path.join(__dirname, 'node_modules/better-react-spinkit/src/**/*.js'),
+  components: path.resolve('node_modules/better-react-spinkit/src/**/*.js'),
   skipComponentsWithoutExample: true,
   styleguideDir: 'dist',
   updateWebpackConfig: (webpackConfig, env) => {
-    webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.join(__dirname, 'src/Layout')
-    webpackConfig.module.loaders.push({
-      test: /\.js?$/,
-      include: dirs,
-      loader: 'babel'
-    })
+    webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.resolve('src/Layout')
+    webpackConfig.module.loaders = [
+      ...webpackConfig.module.loaders,
+      {
+        test: /\.js?$/,
+        include: [
+          path.resolve('node_modules/better-react-spinkit/src'),
+          path.resolve('src')
+        ],
+        loader: 'babel'
+      },
+      {
+        test: /\.scss?$/,
+        include: path.resolve('src'),
+        loader: ExtractTextPlugin.extract('css?module&sourceMap&localIdentName=[path][name]---[local]---[hash:base64:5]!sass?module&sourceMap&localIdentName=[path][name]---[local]---[hash:base64:5]')
+      }
+    ]
+    webpackConfig.plugins = [
+      ...webpackConfig.plugins,
+      new HtmlWebpackPlugin({
+        template: path.resolve('src/index.html')
+      }),
+      new ExtractTextPlugin('style.css')
+    ]
     return webpackConfig
   }
 }

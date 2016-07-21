@@ -3,20 +3,22 @@ import { default as color } from 'color'
 import { default as css } from 'minify-css-string'
 
 const baseColors = {
-  green: '#a5c243',
-  black: '#3a3a3a',
+  blue: '#081017',
+  lightBlue: '#F0F8FA',
+  green: '#C2EBC2',
+  black: '#060913',
   white: '#fff',
   lighterGray: '#f7f7f7',
   lightGray: '#eee',
   gray: '#999',
   darkGray: '#494949',
-  red: '#f52'
+  red: '#BB453E'
 }
 
 const colors = {
   ...baseColors,
-  primary: baseColors.green,
-  // secondary: baseColors.lightBlue,
+  primary: baseColors.blue,
+  secondary: baseColors.red,
   default: baseColors.darkGray,
   // info: baseColors.blue,
   // success: baseColors.green,
@@ -28,8 +30,7 @@ const scale = [0, 10, 20, 42, 64]
 const fontSizes = [64, 30, 25, 18, 16, 14, 11]
 
 const shadows = [
-  `0 6px 22px -3px ${color(colors.black).alpha(0.1).rgbString()}`,
-  `0px 0px 14px 3px ${color(colors.lightBlue).alpha(0.9).rgbString()}`
+  `0 6px 22px -3px ${color(colors.black).alpha(0.1).rgbString()}`
 ]
 
 export const breakpoints = {
@@ -60,9 +61,7 @@ export default class Theme extends Component {
   getChildContext () {
     return {
       betterReactSpinkit: {
-        style: {
-          color: colors.primary
-        },
+        color: colors.primary,
         size: 50
       },
       breakpoints,
@@ -86,10 +85,6 @@ export default class Theme extends Component {
         Breadcrumbs: {
           marginBottom: 0
         },
-        Container: {
-          paddingLeft: scale[1],
-          paddingRight: scale[1]
-        },
         Heading: {
           color: colors.darkGray
         },
@@ -101,9 +96,8 @@ export default class Theme extends Component {
           borderWidth: 0
         },
         NavItem: {
-          backgroundColor: colors.white,
-          color: colors.black,
-          minHeight: scale[3]
+          minHeight: scale[3],
+          fontWeight: 300
         },
         Select: {
           color: colors.darkGray
@@ -128,7 +122,7 @@ export default class Theme extends Component {
 
             html, body {
               background-color: ${colors.white};
-              color: ${colors.black};
+              color: ${colors.blue};
               font-weight: 300;
               line-height: 1.5;
             }
