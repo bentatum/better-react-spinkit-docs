@@ -3,7 +3,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  title: 'better-react-spinkit',
   components: path.resolve('node_modules/better-react-spinkit/src/**/*.js'),
   skipComponentsWithoutExample: true,
   styleguideDir: 'dist',
@@ -28,6 +27,7 @@ module.exports = {
     webpackConfig.plugins = [
       ...webpackConfig.plugins,
       new HtmlWebpackPlugin({
+        title: 'better-react-spinkit',
         template: path.resolve('src/index.html')
       }),
       new ExtractTextPlugin('style.css')
