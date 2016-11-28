@@ -7,7 +7,7 @@ module.exports = {
   components: path.resolve('node_modules/better-react-spinkit/src/**/*.js'),
   skipComponentsWithoutExample: true,
   styleguideDir: 'dist',
-  updateWebpackConfig(webpackConfig, env) {
+  updateWebpackConfig (webpackConfig, env) {
     webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] = path.resolve('src/App')
     webpackConfig.module.loaders = [
       ...webpackConfig.module.loaders,

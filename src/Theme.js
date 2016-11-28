@@ -1,5 +1,5 @@
 
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import color from 'color'
 import minifyCss from 'minify-css-string'
 import withContext from 'recompose/withContext'

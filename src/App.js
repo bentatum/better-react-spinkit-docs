@@ -2,10 +2,8 @@
 import './style.scss'
 import 'babel-polyfill'
 import React from 'react'
-import { Page, Navbar, Theme } from '.'
-import { Container } from 'rebass'
+import { Page, Theme } from '.'
 import { breakpoints } from './Theme'
-import { Flex, Box } from 'reflexbox'
 import MediaContext from 'react-media-context'
 
 export default props =>

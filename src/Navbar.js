@@ -3,7 +3,7 @@ import React from 'react'
 import { Flex } from 'reflexbox'
 import { colors, shadows } from './Theme'
 import GitHubLogo from 'react-icons/lib/go/mark-github'
-import { Heading, Container, Toolbar, NavItem, Space } from 'rebass'
+import { Heading, Container, Toolbar } from 'rebass'
 import getContext from 'recompose/getContext'
 
 const enhance = getContext({
