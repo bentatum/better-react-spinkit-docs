@@ -48,7 +48,8 @@
     "start": "styleguidist server",
     "build": "npm test && styleguidist build",
     "test": "standard",
-    "deploy": "npm run build && aws s3 sync ./dist s3://better-react-spinkit.benjamintatum.com --exclude '.DS_Store' --profile home --cache-control \"max-age=604800\" --expires 2100-01-01T00:00:00Z"
+    "deploy": "npm run build && aws s3 sync ./dist s3://better-react-spinkit.benjamintatum.com --exclude '.DS_Store' --profile home --cache-control \"max-age=604800\" --expires 2100-01-01T00:00:00Z",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E2W2WRQUJURUXA --paths \"/*\" --profile home"
   },
   "standard": {
     "globals": [
