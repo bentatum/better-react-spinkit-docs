@@ -1,6 +1,8 @@
-import { default as React, Component, PropTypes } from 'react'
-import { default as color } from 'color'
-import { default as css } from 'minify-css-string'
+
+import React, { Component, PropTypes } from 'react'
+import color from 'color'
+import minifyCss from 'minify-css-string'
+import withContext from 'recompose/withContext'
 
 const baseColors = {
   blue: '#081017',
@@ -15,7 +17,7 @@ const baseColors = {
   red: '#BB453E'
 }
 
-const colors = {
+export const colors = {
   ...baseColors,
   primary: baseColors.blue,
   secondary: baseColors.red,
@@ -29,7 +31,7 @@ const colors = {
 const scale = [0, 10, 20, 42, 64]
 const fontSizes = [64, 30, 25, 18, 16, 14, 11]
 
-const shadows = [
+export const shadows = [
   `0 6px 22px -3px ${color(colors.black).alpha(0.1).rgbString()}`
 ]
 
@@ -41,13 +43,49 @@ export const breakpoints = {
 
 const fontWeightBase = 300
 
-export default class Theme extends Component {
+const css = `
+  * { box-sizing: border-box; }
 
-  static propTypes = {
-    children: PropTypes.node
-  };
+  html, body {
+    background-color: ${colors.white};
+    color: ${colors.blue};
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  h1 { font-size: ${fontSizes[1]}px !important; }
+  h2 { font-size: ${fontSizes[2]}px !important; }
+  h3 { font-size: ${fontSizes[3]}px !important; }
+  h4 { font-size: ${fontSizes[4]}px !important; }
+  h5 { font-size: ${fontSizes[5]}px !important; }
+  h6 { font-size: ${fontSizes[6]}px !important; }
+  p  {
+    font-size: ${fontSizes[4]}px;
+    margin-top: 0;
+    margin-bottom: ${scale[1]}px;
+  }
+  a {
+    color: ${colors.primary};
+    text-decoration: none;
+  }
+  input, select {
+    background-color: ${colors.white} !important;
+    color: ${colors.darkGray} !important;
+  }
+  ::-webkit-input-placeholder,
+  :-moz-placeholder,
+  ::-moz-placeholder,
+  :-ms-input-placeholder {
+    color: ${colors.darkGray};
+    font-weight: ${fontWeightBase};
+  }
 
-  static childContextTypes = {
+  .Input.isInvalid .Text {
+    margin-top: ${scale[1]}px !important;
+  }
+`
+
+const enhance = withContext(
+  {
     betterReactSpinkit: PropTypes.object,
     breakpoints: PropTypes.object,
     colors: PropTypes.object,
@@ -56,110 +94,66 @@ export default class Theme extends Component {
     reflexbox: PropTypes.object,
     scale: PropTypes.array,
     shadows: PropTypes.array
-  };
-
-  getChildContext () {
-    return {
-      betterReactSpinkit: {
-        color: colors.primary,
-        size: 50
-      },
-      breakpoints,
+  },
+  () => ({
+    betterReactSpinkit: {
+      color: colors.primary,
+      size: 50
+    },
+    breakpoints,
+    colors,
+    reactIconBase: {
+      size: 24,
+      color: colors.primary
+    },
+    reflexbox: { scale },
+    rebass: {
+      bold: 700,
       colors,
-      reactIconBase: {
-        size: 24,
-        color: colors.primary
-      },
-      reflexbox: { scale },
-      rebass: {
-        bold: 700,
-        colors,
-        fontSizes,
-        scale,
-        shadows,
-        Block: {
-          borderWidth: 1,
-          marginBottom: scale[0],
-          marginTop: scale[0]
-        },
-        Breadcrumbs: {
-          marginBottom: 0
-        },
-        Heading: {
-          color: colors.darkGray
-        },
-        Input: {
-          color: colors.darkGray,
-          width: '100%'
-        },
-        Menu: {
-          borderWidth: 0
-        },
-        NavItem: {
-          minHeight: scale[3],
-          fontWeight: 300
-        },
-        Select: {
-          color: colors.darkGray
-        },
-        Toolbar: {
-          backgroundColor: 'transparent',
-          paddingLeft: 0,
-          paddingRight: 0
-        }
-      },
+      fontSizes,
       scale,
-      shadows
-    }
-  }
+      shadows,
+      Block: {
+        borderWidth: 1,
+        marginBottom: scale[0],
+        marginTop: scale[0]
+      },
+      Breadcrumbs: {
+        marginBottom: 0
+      },
+      Heading: {
+        color: colors.darkGray
+      },
+      Input: {
+        color: colors.darkGray,
+        width: '100%'
+      },
+      Menu: {
+        borderWidth: 0
+      },
+      NavItem: {
+        minHeight: scale[3],
+        fontWeight: 300
+      },
+      Select: {
+        color: colors.darkGray
+      },
+      Toolbar: {
+        backgroundColor: 'transparent',
+        paddingLeft: 0,
+        paddingRight: 0
+      }
+    },
+    scale,
+    shadows
+  })
+)
 
-  render () {
-    return (
-      <div>
-        <style>
-          {css(`
-            * { box-sizing: border-box; }
-
-            html, body {
-              background-color: ${colors.white};
-              color: ${colors.blue};
-              font-weight: 300;
-              line-height: 1.5;
-            }
-            h1 { font-size: ${fontSizes[1]}px; }
-            h2 { font-size: ${fontSizes[2]}px; }
-            h3 { font-size: ${fontSizes[3]}px; }
-            h4 { font-size: ${fontSizes[4]}px; }
-            h5 { font-size: ${fontSizes[5]}px; }
-            h6 { font-size: ${fontSizes[6]}px; }
-            p  {
-              font-size: ${fontSizes[4]}px;
-              margin-top: 0;
-              margin-bottom: ${scale[1]}px;
-            }
-            a {
-              color: ${colors.primary};
-              text-decoration: none;
-            }
-            input, select {
-              background-color: ${colors.white} !important;
-              color: ${colors.darkGray} !important;
-            }
-            ::-webkit-input-placeholder,
-            :-moz-placeholder,
-            ::-moz-placeholder,
-            :-ms-input-placeholder {
-              color: ${colors.darkGray};
-              font-weight: ${fontWeightBase};
-            }
-
-            .Input.isInvalid .Text {
-              margin-top: ${scale[1]}px !important;
-            }
-          `)}
-        </style>
-        {this.props.children}
-      </div>
-    )
-  }
-}
+export default enhance(props =>
+  <div>
+    <style>
+      {minifyCss(css)}
+    </style>
+    {props.children}
+  </div>
+)

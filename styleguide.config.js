@@ -1,3 +1,4 @@
+
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -6,8 +7,8 @@ module.exports = {
   components: path.resolve('node_modules/better-react-spinkit/src/**/*.js'),
   skipComponentsWithoutExample: true,
   styleguideDir: 'dist',
-  updateWebpackConfig: (webpackConfig, env) => {
-    webpackConfig.resolve.alias['rsg-components/Layout/Renderer'] = path.resolve('src/Layout')
+  updateWebpackConfig(webpackConfig, env) {
+    webpackConfig.resolve.alias['rsg-components/StyleGuide/StyleGuideRenderer'] = path.resolve('src/App')
     webpackConfig.module.loaders = [
       ...webpackConfig.module.loaders,
       {

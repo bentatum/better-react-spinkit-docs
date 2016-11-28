@@ -1,27 +1,37 @@
-import { default as React, PropTypes } from 'react'
-import { default as Headroom } from 'react-headroom'
-import { Container, Toolbar, NavItem, Space } from 'prefixed-rebass'
-import { default as GitHubLogo } from 'react-icons/lib/go/mark-github'
-import { Flex } from 'prefixed-reflexbox'
 
-const Navbar = (props, { colors, shadows }) =>
-  <Toolbar is={Headroom} backgroundColor='primary' color='white' style={{ boxShadow: shadows[0], minHeight: 'none' }}>
-    <Container style={{ width: '100%' }}>
-      <Flex justify='space-between' align='center'>
-        <NavItem pl={0}>
+import React from 'react'
+import { Flex } from 'reflexbox'
+import { colors, shadows } from './Theme'
+import GitHubLogo from 'react-icons/lib/go/mark-github'
+import { Heading, Container, Toolbar, NavItem, Space } from 'rebass'
+import getContext from 'recompose/getContext'
+
+const enhance = getContext({
+  media: React.PropTypes.array
+})
+
+export default enhance(props =>
+  <Toolbar
+    color='white'
+    backgroundColor='primary'
+    style={{
+      boxShadow: shadows[0],
+      minHeight: 'none'
+    }}>
+    <Container py={2} style={{ width: '100%' }}>
+      <Flex
+        flexColumn
+        align='center'>
+        <Heading
+          color='white'
+          level={1}>
           Better React Spinkit
-        </NavItem>
-        <Space />
-        <NavItem is='a' href='https://github.com/bentatum/better-react-spinkit' target='_blank'>
+        </Heading>
+        <a target='_blank'
+          href='https://github.com/bentatum/better-react-spinkit'>
           <GitHubLogo color={colors.secondary} />
-        </NavItem>
+        </a>
       </Flex>
     </Container>
   </Toolbar>
-
-Navbar.contextTypes = {
-  colors: PropTypes.object.isRequired,
-  shadows: PropTypes.array.isRequired
-}
-
-export default Navbar
+)
